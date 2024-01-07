@@ -4,7 +4,9 @@ const app = express();
 // PUT -
 // POST -
 // DELETE -
-app.get("/hello", (req, res, next) => {
+app.use(express.json());
+app.post("/hello", (req, res, next) => {
+    console.log(req.body.name);
     return res.send("Hello");
 });
 app.listen(5000, () => console.log("Server Open"));
