@@ -11,8 +11,8 @@ const app = express();
 
 app.use(express.json());
 
-app.post("/hello", (req, res, next) => {
-    console.log(req.body.name);
+app.delete("/user/:id", (req, res, next) => {
+    console.log(req.params.id);
     return res.send("Hello");
 });
 
