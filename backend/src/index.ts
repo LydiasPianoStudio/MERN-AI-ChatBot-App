@@ -1,22 +1,12 @@
-import { log } from "console";
-import express from "express";
+import app from "./app.js";
+import { connectToDatabase } from "./db/connection.js"; 
 
-const app = express();
+//connecions and listeners
+connectToDatabase().then(() => {
+    app.listen(5000, () => console.log("Server Open Connected & to Database! Tee HEE HEE"));
+})
+.catch((err) => console.log(err));
 
-
-// GET -
-// PUT -
-// POST -
-// DELETE -
-
-app.use(express.json());
-
-app.delete("/user/:id", (req, res, next) => {
-    console.log(req.params.id);
-    return res.send("Hello");
-});
-
-app.listen(5000, () => console.log("Server Open"));
 
 
 
