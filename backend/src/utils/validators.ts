@@ -28,3 +28,5 @@ const signupValidator = [
 
 
 ];
+
+export { validate, signupValidator }; 

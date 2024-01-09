@@ -22,4 +22,5 @@ const signupValidator = [
         .isLength({ min: 6 })
         .withMessage("Password should contain at least 6 characters"),
 ];
+export { validate, signupValidator };
 //# sourceMappingURL=validators.js.map
