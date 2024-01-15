@@ -7,7 +7,9 @@ import Chat from "./pages/Chat";
 import NotFound from "./pages/NotFound";
 
 
+
 function App() {
+
   return (
   <main>
     <Header />
