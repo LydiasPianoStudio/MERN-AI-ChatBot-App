@@ -8,7 +8,9 @@ type Props = {
     onClick?: () => Promise<void>; 
 };
 const NaivgationLink = (props: Props) => {
-  return ( <Link 
+  return ( 
+  <Link
+    className= "nav-link" 
     to = {props.to} style = {{background: props.bg, color: props.textColor}} 
   >
     {props.text}
