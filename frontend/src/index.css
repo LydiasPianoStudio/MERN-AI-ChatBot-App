@@ -3,7 +3,7 @@
 html,body{
   margin: 0;
   padding: 0;
-  background: black;
+  background: red;
   color: white;
   font-family: "Roboto Slab", serif;
 } 
@@ -22,3 +22,4 @@ html,body{
   text-decoration: none;
   letter-spacing: 1px;
 }
+
