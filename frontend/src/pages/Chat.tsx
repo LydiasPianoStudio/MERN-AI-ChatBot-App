@@ -1,26 +1,28 @@
-import React from "react";
+import React, {  useRef, useState } from "react";
 import { Box, Avatar, Typography, Button, IconButton } from '@mui/material';
 import { red } from '@mui/material/colors';
 import { UserAuth } from "../context/AuthContext";
 import ChatItem from "../components/chat/ChatItem";
 import { IoMdSend } from 'react-icons/io';
-
-interface ChatMessage {
-  role: string;
-  string: string;
+type Message = {
+  role: "user" | "assistant";
   content: string;
-}
+};
 
-const chatMessages: ChatMessage[] = [
-  { role: "user", string: "Hello", content: "Hi there! How can I help you today?" },
-  { role: "assistant", string: "Help", content: "Of course! What do you need assistance with?" },
-  { role: "user", string: "Information", content: "I need information about your services." },
-  { role: "assistant", string: "Services", content: "We provide a range of services including X, Y, and Z. Is there anything specific you'd like to know?" },
-  // Add more messages as needed
-];
 
-const Chat: React.FC = () => {
+const Chat = () => {
+  const inputRef = useRef<HTMLInputElement | null>(null);
   const auth = UserAuth();
+  const [chatMessages, setChatMessages] = useState<Message[]>([])
+  const handleSubmit = async () => {
+    const content = inputRef.current?.value as string;
+    if (inputRef && inputRef.current) {
+      inputRef.current.value = "";
+    }
+    const newMessage: Message = { role: "user", content };
+    setChatMessages((prev) => [...prev, newMessage]); 
+   };
+
 
   if (!auth?.user) {
     return null;
@@ -49,9 +51,9 @@ const Chat: React.FC = () => {
         <Box sx={{
           display: "flex",
           width: "100%",
-          height: "60vh",
-          bgcolor: "rgb(17, 29, 39)", //change color
-          borderRadius: 5,
+          height: "80vh",
+          bgcolor: "rgb(17, 29, 39)",
+          borderRadius: 3,
           flexDirection: "column",
           mx: 3,
         }}>
@@ -82,7 +84,7 @@ const Chat: React.FC = () => {
             ":hover": {
               bgcolor: red.A400
             }
-          }} >
+          }}>
             Clear Conversation
           </Button>
         </Box>
@@ -99,19 +101,20 @@ const Chat: React.FC = () => {
         </Typography>
         <Box sx={{
           width: '100%',
-          height: "60vh",
+          height: "80vh",
           borderRadius: 3,
           mx: "auto",
           display: 'flex',
           flexDirection: "column",
-          overflow: 'scroll',
-          overflowX: "hidden",
-          overflowY: "auto",
+          overflowY: "scroll",
           scrollBehavior: "smooth",
         }}
-        >{chatMessages.map((chat, index) => (
-          <ChatItem content={chat.content} role={chat.role} key={index} />
-        ))}</Box>
+        >
+          {chatMessages.map((chat, index) => (
+            //@ts-ignore
+            <ChatItem content={chat.content} role={chat.role} key={index} />
+          ))}
+        </Box>
         <div style={{
           width: "100%",
           padding: "20px",
@@ -119,22 +122,24 @@ const Chat: React.FC = () => {
           backgroundColor: "rgb(17,27,39)",
           display: 'flex',
           margin: "auto",
-        }}
-        >
+        }}>
           {""}
           <input
+          ref={inputRef}
             type="text"
             style={{
               width: "100%",
               backgroundColor: "transparent",
-              padding: '10px',
+              padding: "30px",
               border: "none",
               outline: "none",
               color: "white",
               fontSize: "20px",
             }}
           />
-          <IconButton sx={{ ml: "auto", color: "white" }}> <IoMdSend /> </IconButton>
+          <IconButton onClick={handleSubmit} sx={{ ml: "auto", color: "white", mx: 1 }}>
+         <IoMdSend /> 
+         </IconButton>
         </div>
       </Box>
     </Box>
