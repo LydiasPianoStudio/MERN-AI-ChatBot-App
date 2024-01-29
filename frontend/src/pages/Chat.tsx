@@ -1,29 +1,31 @@
-import React, {  useRef, useState } from "react";
+import {  useRef, useState } from "react";
 import { Box, Avatar, Typography, Button, IconButton } from '@mui/material';
 import { red } from '@mui/material/colors';
 import { UserAuth } from "../context/AuthContext";
 import ChatItem from "../components/chat/ChatItem";
 import { IoMdSend } from 'react-icons/io';
+import { sendChatRequest } from "../helpers/api-communicator";
+
 type Message = {
   role: "user" | "assistant";
   content: string;
+  
 };
-
-
-const Chat = () => {
+function Chat() {
   const inputRef = useRef<HTMLInputElement | null>(null);
   const auth = UserAuth();
-  const [chatMessages, setChatMessages] = useState<Message[]>([])
+  const [chatMessages, setChatMessages] = useState<Message[]>([]);
   const handleSubmit = async () => {
     const content = inputRef.current?.value as string;
     if (inputRef && inputRef.current) {
       inputRef.current.value = "";
     }
     const newMessage: Message = { role: "user", content };
-    setChatMessages((prev) => [...prev, newMessage]); 
-   };
-
-
+    setChatMessages((prev) => [...prev, newMessage]);
+    const chatData = await sendChatRequest(content);
+    setChatMessages([...chatData.chats]);
+  };
+  ////////////////////////////////////
   if (!auth?.user) {
     return null;
   }
@@ -114,7 +116,8 @@ const Chat = () => {
             //@ts-ignore
             <ChatItem content={chat.content} role={chat.role} key={index} />
           ))}
-        </Box>
+
+       </Box>
         <div style={{
           width: "100%",
           padding: "20px",
@@ -125,7 +128,7 @@ const Chat = () => {
         }}>
           {""}
           <input
-          ref={inputRef}
+            ref={inputRef}
             type="text"
             style={{
               width: "100%",
@@ -135,15 +138,14 @@ const Chat = () => {
               outline: "none",
               color: "white",
               fontSize: "20px",
-            }}
-          />
+            }} />
           <IconButton onClick={handleSubmit} sx={{ ml: "auto", color: "white", mx: 1 }}>
-         <IoMdSend /> 
-         </IconButton>
+            <IoMdSend />
+          </IconButton>
         </div>
       </Box>
     </Box>
   );
-};
+}
 
 export default Chat;
