@@ -11,7 +11,7 @@ type Message = {
   content: string;
   
 };
-function Chat() {
+const Chat = () => {
   const inputRef = useRef<HTMLInputElement | null>(null);
   const auth = UserAuth();
   const [chatMessages, setChatMessages] = useState<Message[]>([]);
@@ -113,7 +113,7 @@ function Chat() {
         }}
         >
           {chatMessages.map((chat, index) => (
-            //@ts-ignore
+            
             <ChatItem content={chat.content} role={chat.role} key={index} />
           ))}
 
