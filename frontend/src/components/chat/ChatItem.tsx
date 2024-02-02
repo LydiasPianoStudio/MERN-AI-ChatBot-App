@@ -1,7 +1,6 @@
 import React from 'react';
 import { Avatar, Box, Typography } from "@mui/material"
 import { UserAuth } from '../../context/AuthContext';
-//////////////
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
 import { coldarkDark } from "react-syntax-highlighter/dist/esm/styles/prism";
 
@@ -28,11 +27,6 @@ function isCodeBlock(str: string) {
   return false;
 }
 
-
-
-////////////////////////
-
-
 const ChatItem = ({
   content,
   role,
@@ -46,8 +40,7 @@ const ChatItem = ({
   //const [firstName, lastName = ''] = auth.user.name.split(" ");
   return role == "assistant" ? (
 
-
-    //////////////////
+   //I think this is why I wasnt getting a full answered response from "assistant" when "user" asks question: ***return role === "assistant" ? ***
     <Box sx={{ display: 'flex', p: 2, bgcolor: "#004d5612", my: 2, gap: 2 }}>
       <Avatar sx={{ ml: "0" }}>
         <img src="openai.png" alt="openai" width={"30px"} />
