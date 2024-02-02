@@ -4,7 +4,7 @@ import { red } from '@mui/material/colors';
 import { UserAuth } from "../context/AuthContext";
 import ChatItem from "../components/chat/ChatItem";
 import { IoMdSend } from 'react-icons/io';
-import { useNavigate }  from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import {
   deleteUserChats,
   getUserChats,
@@ -121,18 +121,23 @@ const Chat = () => {
           <Typography sx={{ mx: 'auto', fontFamily: "work sans", my: 4, p: 3 }}>
             Ask any questions related to Entertainment, Business, Education, Advice, etc. Please, don't share personal information.
           </Typography>
-          <Button sx={{
-            width: "200px",
-            my: 'auto',
-            color: 'white',
-            fontWeight: "700",
-            borderRadius: 3,
-            mx: "auto",
-            bgcolor: red[300],
-            ":hover": {
-              bgcolor: red.A400
-            }
-          }}>
+
+
+          <Button
+            onClick={handleDeleteChats}
+            sx={{
+              width: "200px",
+              my: 'auto',
+              color: 'white',
+              fontWeight: "700",
+              borderRadius: 3,
+              mx: "auto",
+              bgcolor: red[300],
+              ":hover": {
+                bgcolor: red.A400
+              }
+            }}
+          >
             Clear Conversation
           </Button>
         </Box>
@@ -158,8 +163,11 @@ const Chat = () => {
           scrollBehavior: "smooth",
         }}
         >
-          {chatMessages.map((chat, index) => (
 
+
+          {chatMessages.map((chat, index) => (
+            //not sure is this is needed:
+            //@ts-ignore
             <ChatItem content={chat.content} role={chat.role} key={index} />
           ))}
 
