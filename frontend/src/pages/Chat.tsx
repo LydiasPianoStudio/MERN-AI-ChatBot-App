@@ -1,16 +1,24 @@
-import {  useRef, useState } from "react";
+import React, { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { Box, Avatar, Typography, Button, IconButton } from '@mui/material';
 import { red } from '@mui/material/colors';
 import { UserAuth } from "../context/AuthContext";
 import ChatItem from "../components/chat/ChatItem";
 import { IoMdSend } from 'react-icons/io';
-import { sendChatRequest } from "../helpers/api-communicator";
+import { useNavigate }  from "react-router-dom";
+import {
+  deleteUserChats,
+  getUserChats,
+  sendChatRequest,
+} from "../helpers/api-communicator";
+import toast from "react-hot-toast";
 
+///////////
 type Message = {
   role: "user" | "assistant";
   content: string;
-  
+
 };
+/////////////////////role: "user" is not going to the openai, only "assistant" role responds back 
 const Chat = () => {
   const inputRef = useRef<HTMLInputElement | null>(null);
   const auth = UserAuth();
@@ -25,7 +33,43 @@ const Chat = () => {
     const chatData = await sendChatRequest(content);
     setChatMessages([...chatData.chats]);
   };
-  ////////////////////////////////////
+  ////////////////////////////////////chat message of user doesn't stay after sent and doesnt respond with message
+
+  const handleDeleteChats = async () => {
+    try {
+      toast.loading("Deleting Chats", { id: "deletechats" });
+      await deleteUserChats();
+      setChatMessages([]);
+      toast.success("Deleted Chats Successfully", { id: "deletechats" });
+    } catch (error) {
+      console.log(error);
+      toast.error("Deleting chats failed", { id: "deletechats" });
+    }
+  };
+
+  useLayoutEffect(() => {
+    if (auth?.isLoggedIn && auth.user) {
+      toast.loading("Loading Chats", { id: "loadchats" });
+      getUserChats()
+        .then((data) => {
+          setChatMessages([...data.chats]);
+          toast.success("Successfully loaded chats", { id: "loadchats" });
+        })
+        .catch((err) => {
+          console.log(err);
+          toast.error("Loading Failed", { id: "loadchats" });
+        });
+    }
+  }, [auth]);
+
+  useEffect(() => {
+    const navigate = useNavigate();
+    if (!auth?.user) {
+      return navigate("/login");
+    }
+  }, [auth]);
+
+  ////////////////////////////////////////////////
   if (!auth?.user) {
     return null;
   }
@@ -68,6 +112,8 @@ const Chat = () => {
           }}>
             {firstName[0]}
             {lastName[0]}
+            {auth?.user?.name[0]}
+            {auth?.user?.name.split(" ")[1][0]}
           </Avatar>
           <Typography sx={{ mx: 'auto', fontFamily: "work sans" }}>
             You are talking to a Chatbot
@@ -113,11 +159,11 @@ const Chat = () => {
         }}
         >
           {chatMessages.map((chat, index) => (
-            
+
             <ChatItem content={chat.content} role={chat.role} key={index} />
           ))}
 
-       </Box>
+        </Box>
         <div style={{
           width: "100%",
           padding: "20px",
