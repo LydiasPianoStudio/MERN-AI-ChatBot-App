@@ -1,41 +1,37 @@
-import React from "react";
+import React, {useEffect} from "react";
 import { Box, Typography, Button } from "@mui/material";
 import CustomedInput from "../components/shared/CustomedInput";
 import { RiLoginBoxLine } from "react-icons/ri";
 import { toast } from "react-hot-toast";
 import { UserAuth } from "../context/AuthContext";
+import { useNavigate } from "react-router-dom";
 
 const Login = () => {
+  const navigate = useNavigate();
   const auth = UserAuth();
-
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const formData = new FormData(e.currentTarget);
     const email = formData.get("email") as string;
     const password = formData.get("password") as string;
-
     try {
       toast.loading("Signing In", { id: "login" });
       await auth?.login(email, password);
       toast.success("Signed In Successfully", { id: "login" });
     } catch (error) {
       console.log(error);
-      toast.error("Signed In Failed", { id: "login" });
+      toast.error("Signing In Failed", { id: "login" });
     }
   };
-
+  useEffect(() => {
+    if (auth?.user) {
+      return navigate("/chat");
+    }
+  }, [auth]);
   return (
     <Box width={"100%"} height={"100%"} display="flex" flex={1}>
-      <Box
-        padding={8}
-        mt={8}
-        display={{ md: "flex", sm: "none", xs: "none" }}
-      >
-        <img
-          src="airobot.png"
-          alt="Robot"
-          style={{ width: "400px" }}
-        />
+      <Box padding={8} mt={8} display={{ md: "flex", sm: "none", xs: "none" }}>
+        <img src="airobot.png" alt="Robot" style={{ width: "400px" }} />
       </Box>
       <Box
         display={"flex"}
@@ -99,4 +95,3 @@ const Login = () => {
 };
 
 export default Login;
-

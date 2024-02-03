@@ -20,6 +20,7 @@ type Message = {
 };
 /////////////////////role: "user" is not going to the openai, only "assistant" role responds back 
 const Chat = () => {
+  const navigate = useNavigate();
   const inputRef = useRef<HTMLInputElement | null>(null);
   const auth = UserAuth();
   const [chatMessages, setChatMessages] = useState<Message[]>([]);
@@ -63,8 +64,7 @@ const Chat = () => {
   }, [auth]);
 
   useEffect(() => {
-    const navigate = useNavigate();
-    if (!auth?.user) {
+      if (!auth?.user) {
       return navigate("/login");
     }
   }, [auth]);
