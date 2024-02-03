@@ -1,14 +1,15 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
 
-html,body{
+html,
+body {
   margin: 0;
   padding: 0;
   background: red;
   color: white;
   font-family: "Roboto Slab", serif;
-} 
+}
 
-.image-inverted{
+.image-inverted {
   filter: invert(100%);
 }
 
@@ -25,5 +26,19 @@ html,body{
 
 .MuiOutlinedInput-input-root.Mui-focused,
 .MuiOutlinedInput-notchedOutline {
-  border-color: white !important ;
+  border-color: white !important;
+}
+
+.rotate {
+  animation: rotation 8s infinite linear;
+}
+
+@keyframes rotation {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(359deg);
+  }
 }

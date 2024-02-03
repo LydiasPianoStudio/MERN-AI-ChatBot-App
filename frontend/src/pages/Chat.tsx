@@ -36,7 +36,7 @@ const Chat = () => {
   }
   ////////////////////////////////////chat message of user doesn't stay after sent and doesnt respond with message
 
-      //
+  //
 
   ///////////////
 
@@ -68,7 +68,7 @@ const Chat = () => {
   }, [auth]);
 
   useEffect(() => {
-      if (!auth?.user) {
+    if (!auth?.user) {
       return navigate("/login");
     }
   }, [auth]);
@@ -156,35 +156,37 @@ const Chat = () => {
         }}>
           Model - GPT 3.5 Turbo
         </Typography>
-        <Box sx={{
-          width: '100%',
-          height: "80vh",
-          borderRadius: 3,
-          mx: "auto",
-          display: 'flex',
-          flexDirection: "column",
-          overflowY: "scroll",
-          scrollBehavior: "smooth",
-        }}
+        <Box
+          sx={{
+            width: "100%",
+            height: "60vh",
+            borderRadius: 3,
+            mx: "auto",
+            display: "flex",
+            flexDirection: "column",
+            overflow: "scroll",
+            overflowX: "hidden",
+            overflowY: "auto",
+            scrollBehavior: "smooth",
+          }}
         >
 
 
           {chatMessages.map((chat, index) => (
-            //not sure is this is needed:
             //@ts-ignore
             <ChatItem content={chat.content} role={chat.role} key={index} />
           ))}
-
         </Box>
-        <div style={{
-          width: "100%",
-          padding: "20px",
-          borderRadius: 8,
-          backgroundColor: "rgb(17,27,39)",
-          display: 'flex',
-          margin: "auto",
-        }}>
-          {""}
+        <div
+          style={{
+            width: "100%",
+            borderRadius: 8,
+            backgroundColor: "rgb(17,27,39)",
+            display: "flex",
+            margin: "auto",
+          }}
+        >
+          {" "}
           <input
             ref={inputRef}
             type="text"
@@ -196,14 +198,15 @@ const Chat = () => {
               outline: "none",
               color: "white",
               fontSize: "20px",
-            }} />
-          <IconButton onClick={handleSubmit} sx={{ ml: "auto", color: "white", mx: 1 }}>
+            }}
+          />
+          <IconButton onClick={handleSubmit} sx={{ color: "white", mx: 1 }}>
             <IoMdSend />
           </IconButton>
         </div>
       </Box>
     </Box>
   );
-}
+};
 
 export default Chat;

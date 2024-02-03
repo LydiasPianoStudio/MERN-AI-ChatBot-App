@@ -6,7 +6,7 @@ type Props = {
     label: string;
 }
 
-const CustomizedInput = (props: Props) => {
+const CustomedInput = (props: Props) => {
   return (
     <TextField 
     margin="normal"
@@ -20,4 +20,4 @@ const CustomizedInput = (props: Props) => {
   );
 };
 
-export default CustomizedInput
+export default CustomedInput
