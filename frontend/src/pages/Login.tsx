@@ -1,11 +1,10 @@
-import React, {useEffect} from "react";
+import React, { useEffect } from "react";
+import { IoIosLogIn } from "react-icons/io";
 import { Box, Typography, Button } from "@mui/material";
 import CustomedInput from "../components/shared/CustomedInput";
-import { RiLoginBoxLine } from "react-icons/ri";
 import { toast } from "react-hot-toast";
 import { UserAuth } from "../context/AuthContext";
 import { useNavigate } from "react-router-dom";
-
 const Login = () => {
   const navigate = useNavigate();
   const auth = UserAuth();
@@ -83,7 +82,7 @@ const Login = () => {
                   color: "black",
                 },
               }}
-              endIcon={<RiLoginBoxLine />}
+              endIcon={<IoIosLogIn />}
             >
               Login
             </Button>

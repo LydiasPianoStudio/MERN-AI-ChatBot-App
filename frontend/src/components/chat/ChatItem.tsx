@@ -27,18 +27,18 @@ function isCodeBlock(str: string) {
   return false;
 }
 
-const ChatItem = ({
-  content,
-  role,
-}: {
-  content: string;
-  role: "user" | "assistant";
-}) => {
-  const messageBlocks = extractCodeFromString(content);
-  const auth = UserAuth();
-
+  const ChatItem = ({
+    content,
+    role,
+  }: {
+    content: string;
+    role: "user" | "assistant";
+  }) => {
+    const messageBlocks = extractCodeFromString(content);
+    const auth = UserAuth();
+    return role == "assistant" ? (
   //const [firstName, lastName = ''] = auth.user.name.split(" ");
-  return role == "assistant" ? (
+ 
 
    //I think this is why I wasnt getting a full answered response from "assistant" when "user" asks question: ***return role === "assistant" ? ***
     <Box sx={{ display: 'flex', p: 2, bgcolor: "#004d5612", my: 2, gap: 2 }}>
@@ -52,7 +52,7 @@ const ChatItem = ({
     <Box sx={{ display: 'flex', p: 2, bgcolor: "#004d56", my: 2, gap: 2 }}>
       <Avatar sx={{ ml: "0", bgcolor: "black", color: "white" }}>
         {/* {firstName[0]}
-        {lastName[0]} */}
+        {lastName[0]} HOW TO SPLIT NAME*/} 
         {auth?.user?.name[0]}
         {auth?.user?.name.split(" ")[1][0]}
       </Avatar>

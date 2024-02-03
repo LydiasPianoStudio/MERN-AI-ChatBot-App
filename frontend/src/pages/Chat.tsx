@@ -33,8 +33,12 @@ const Chat = () => {
     setChatMessages((prev) => [...prev, newMessage]);
     const chatData = await sendChatRequest(content);
     setChatMessages([...chatData.chats]);
-  };
+  }
   ////////////////////////////////////chat message of user doesn't stay after sent and doesnt respond with message
+
+      //
+
+  ///////////////
 
   const handleDeleteChats = async () => {
     try {
