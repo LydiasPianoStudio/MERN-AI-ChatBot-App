@@ -12,34 +12,38 @@ import {
 } from "../helpers/api-communicator";
 import toast from "react-hot-toast";
 
-///////////
 type Message = {
   role: "user" | "assistant";
   content: string;
-
 };
-/////////////////////role: "user" is not going to the openai, only "assistant" role responds back 
+
 const Chat = () => {
   const navigate = useNavigate();
   const inputRef = useRef<HTMLInputElement | null>(null);
   const auth = UserAuth();
   const [chatMessages, setChatMessages] = useState<Message[]>([]);
+ //const [messages, setMessages] = useState<ChatCompletionMessageParam[]>([]);
+
+
   const handleSubmit = async () => {
-    const content = inputRef.current?.value as string;
+        const content = inputRef.current?.value as string;
     if (inputRef && inputRef.current) {
       inputRef.current.value = "";
     }
     const newMessage: Message = { role: "user", content };
     setChatMessages((prev) => [...prev, newMessage]);
-    const chatData = await sendChatRequest(content);
-    setChatMessages([...chatData.chats]);
-  }
-  ////////////////////////////////////chat message of user doesn't stay after sent and doesnt respond with message
+  
+    try {
+      const chatData = await sendChatRequest(content);
+      setChatMessages((prev) => [...prev, ...chatData.chats]);
+    } catch (error) {
+      console.error("Error sending chat request:", error);
+      // Handle error appropriately
+    }
+  };
 
-  //
 
-  ///////////////
-
+  
   const handleDeleteChats = async () => {
     try {
       toast.loading("Deleting Chats", { id: "deletechats" });
@@ -73,12 +77,6 @@ const Chat = () => {
     }
   }, [auth]);
 
-  ////////////////////////////////////////////////
-  if (!auth?.user) {
-    return null;
-  }
-
-  const [firstName, lastName = ''] = auth.user.name.split(" ");
 
   return (
     <Box sx={{
@@ -114,8 +112,7 @@ const Chat = () => {
             color: 'black',
             fontWeight: 700,
           }}>
-            {firstName[0]}
-            {lastName[0]}
+
             {auth?.user?.name[0]}
             {auth?.user?.name.split(" ")[1][0]}
           </Avatar>
@@ -125,7 +122,6 @@ const Chat = () => {
           <Typography sx={{ mx: 'auto', fontFamily: "work sans", my: 4, p: 3 }}>
             Ask any questions related to Entertainment, Business, Education, Advice, etc. Please, don't share personal information.
           </Typography>
-
 
           <Button
             onClick={handleDeleteChats}
@@ -171,9 +167,8 @@ const Chat = () => {
           }}
         >
 
-
           {chatMessages.map((chat, index) => (
-            //@ts-ignore
+          
             <ChatItem content={chat.content} role={chat.role} key={index} />
           ))}
         </Box>

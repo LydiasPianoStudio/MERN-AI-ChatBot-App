@@ -1,40 +1,57 @@
 import User from "../models/User.js";
-import { configureOpenAI } from "../config/openai-config.js";
-import OpenAI from "openai";
+import Configuration, { OpenAI } from "openai";
 export const generateChatCompletion = async (req, res, next) => {
-    const { message } = req.body;
     try {
+        const { message } = req.body;
+        console.log("Received message:", message);
         const user = await User.findById(res.locals.jwtData.id);
-        if (!user)
-            return res
-                .status(401)
-                .json({ message: "User not registered OR Token malfunctioned" });
-        // Specify the type for the messages array
-        const messages = [
-            ...user.chats.map(({ role, content }) => ({ role, content })),
-            { content: message, role: "user" },
-        ];
-        // send all chats with the new one to OpenAI API
-        const config = configureOpenAI();
+        if (!user) {
+            return res.status(401).json({ message: "User not registered OR Token malfunctioned" });
+        }
+        const config = new Configuration({
+            apiKey: process.env.OPEN_AI_SECRET,
+            organization: process.env.OPENAI_ORGANIZATION_ID,
+        });
         const openai = new OpenAI({ apiKey: config.apiKey });
-        // chat completion response
-        const chatCompletion = await openai.chat.completions.create({
-            model: "gpt-3.5-turbo",
-            messages: [{ role: "system", content: "You are a helpful assistant." }],
-        });
-        user.chats.push({
-            role: "assistant",
-            content: chatCompletion.choices[0].message.content,
-        });
-        await user.save();
-        return res.status(200).json({ chats: user.chats });
+        const messages = [
+            { role: "system", content: "You are a helpful assistant." },
+            ...user.chats.map(({ role, content }) => ({ role, content })),
+            { role: "user", content: message },
+        ];
+        console.log("Constructed messages:", messages);
+        const params = {
+            messages: [{ role: 'user', content: message }],
+            model: 'gpt-3.5-turbo',
+        };
+        console.log("OpenAI API Request Params:", params);
+        const chatCompletion = await openai.chat.completions.create(params);
+        console.log("OpenAI API Response:", chatCompletion);
+        if (chatCompletion.choices && chatCompletion.choices.length > 0) {
+            const assistantMessage = {
+                role: "assistant",
+                content: chatCompletion.choices[0].message.content,
+            };
+            const lastChat = user.chats[user.chats.length - 1];
+            console.log("Last chat content:", lastChat ? lastChat.content : "No last chat");
+            console.log("New assistant message:", assistantMessage.content);
+            if (!lastChat || lastChat.content !== assistantMessage.content) {
+                user.chats.push(assistantMessage);
+                console.log("User chats after adding message:", user.chats);
+                await user.save();
+            }
+            return res.status(200).json({ chats: user.chats });
+        }
+        else {
+            console.log("OpenAI response is invalid");
+            return res.status(500).json({ message: "OpenAI response is invalid" });
+        }
     }
     catch (error) {
-        console.log(error);
+        console.error(error);
         return res.status(500).json({ message: "Something went wrong" });
     }
-    ;
 };
+//////////
 export const sendChatsToUser = async (req, res, next) => {
     try {
         //user token check

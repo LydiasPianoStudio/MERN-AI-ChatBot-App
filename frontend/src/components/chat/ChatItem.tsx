@@ -1,6 +1,6 @@
-import React from 'react';
-import { Avatar, Box, Typography } from "@mui/material"
-import { UserAuth } from '../../context/AuthContext';
+import React from "react";
+import { Box, Avatar, Typography } from "@mui/material";
+import { UserAuth } from "../../context/AuthContext";
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
 import { coldarkDark } from "react-syntax-highlighter/dist/esm/styles/prism";
 
@@ -26,7 +26,6 @@ function isCodeBlock(str: string) {
   }
   return false;
 }
-
 const ChatItem = ({
   content,
   role,
@@ -36,7 +35,7 @@ const ChatItem = ({
 }) => {
   const messageBlocks = extractCodeFromString(content);
   const auth = UserAuth();
-  return role == "assistant" ? (
+  return role === "assistant" ? (
     <Box
       sx={{
         display: "flex",
