@@ -1,4 +1,4 @@
-import React, { useEffect, useLayoutEffect, useRef, useState } from "react";
+import React, { useEffect, useLayoutEffect, useRef, useState,  } from "react";
 import { Box, Avatar, Typography, Button, IconButton } from '@mui/material';
 import { red } from '@mui/material/colors';
 import { UserAuth } from "../context/AuthContext";
@@ -11,6 +11,7 @@ import {
   sendChatRequest,
 } from "../helpers/api-communicator";
 import toast from "react-hot-toast";
+import { BeatLoader } from "react-spinners";
 
 type Message = {
   role: "user" | "assistant";
@@ -22,25 +23,26 @@ const Chat = () => {
   const inputRef = useRef<HTMLInputElement | null>(null);
   const auth = UserAuth();
   const [chatMessages, setChatMessages] = useState<Message[]>([]);
- //const [messages, setMessages] = useState<ChatCompletionMessageParam[]>([]);
+  const [loading, setLoading] = useState(false);
+const handleSubmit = async () => {
+  const content = inputRef.current?.value as string;
+  if (inputRef && inputRef.current) {
+    inputRef.current.value = "";
+  }
+  const newMessage: Message = { role: "user", content };
+  setChatMessages((prev) => [...prev, newMessage]);
 
-
-  const handleSubmit = async () => {
-        const content = inputRef.current?.value as string;
-    if (inputRef && inputRef.current) {
-      inputRef.current.value = "";
-    }
-    const newMessage: Message = { role: "user", content };
-    setChatMessages((prev) => [...prev, newMessage]);
-  
-    try {
-      const chatData = await sendChatRequest(content);
-      setChatMessages((prev) => [...prev, ...chatData.chats]);
-    } catch (error) {
-      console.error("Error sending chat request:", error);
-      // Handle error appropriately
-    }
-  };
+  setLoading(true); // Start loading before the request
+  try {
+    const chatData = await sendChatRequest(content);
+    setChatMessages((prev) => [...prev, chatData.chats[chatData.chats.length - 1]]);
+  } catch (error) {
+    console.error("Error sending chat request:", error);
+    // Handle error appropriately
+  }
+  setLoading(false); // Stop loading after the request
+};
+ 
 
 
   
@@ -55,13 +57,13 @@ const Chat = () => {
       toast.error("Deleting chats failed", { id: "deletechats" });
     }
   };
-
   useLayoutEffect(() => {
     if (auth?.isLoggedIn && auth.user) {
       toast.loading("Loading Chats", { id: "loadchats" });
       getUserChats()
         .then((data) => {
           setChatMessages([...data.chats]);
+          console.log('Fetched chats:', data.chats); // Log the fetched chats
           toast.success("Successfully loaded chats", { id: "loadchats" });
         })
         .catch((err) => {
@@ -195,9 +197,18 @@ const Chat = () => {
               fontSize: "20px",
             }}
           />
-          <IconButton onClick={handleSubmit} sx={{ color: "white", mx: 1 }}>
-            <IoMdSend />
-          </IconButton>
+<IconButton onClick={handleSubmit} sx={{ color: "white", mx: 1 }} disabled={loading}>
+  {loading ? 
+    <Box sx={{
+      display: 'block',
+      margin: '0 auto',
+    }}>
+      <BeatLoader color={"#123abc"} loading={loading} size={15} />
+    </Box> 
+    : 
+    <IoMdSend />
+  }
+</IconButton>
         </div>
       </Box>
     </Box>

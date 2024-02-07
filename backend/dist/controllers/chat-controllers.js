@@ -31,14 +31,13 @@ export const generateChatCompletion = async (req, res, next) => {
                 role: "assistant",
                 content: chatCompletion.choices[0].message.content,
             };
-            const lastChat = user.chats[user.chats.length - 1];
-            console.log("Last chat content:", lastChat ? lastChat.content : "No last chat");
-            console.log("New assistant message:", assistantMessage.content);
-            if (!lastChat || lastChat.content !== assistantMessage.content) {
-                user.chats.push(assistantMessage);
-                console.log("User chats after adding message:", user.chats);
-                await user.save();
-            }
+            const userMessage = {
+                role: "user",
+                content: message,
+            };
+            user.chats.push(userMessage, assistantMessage); // Save both user and assistant messages
+            console.log("User chats after adding messages:", user.chats);
+            await user.save();
             return res.status(200).json({ chats: user.chats });
         }
         else {
@@ -51,7 +50,6 @@ export const generateChatCompletion = async (req, res, next) => {
         return res.status(500).json({ message: "Something went wrong" });
     }
 };
-//////////
 export const sendChatsToUser = async (req, res, next) => {
     try {
         //user token check
@@ -71,6 +69,7 @@ export const sendChatsToUser = async (req, res, next) => {
 };
 export const deleteChats = async (req, res, next) => {
     try {
+        console.log('deleteChats function called'); // Add this line
         //user token check
         const user = await User.findById(res.locals.jwtData.id);
         if (!user) {

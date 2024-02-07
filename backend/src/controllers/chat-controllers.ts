@@ -1,7 +1,7 @@
 import { NextFunction, Request, Response } from "express";
 import User from "../models/User.js";
 import Configuration, {OpenAI } from "openai";
-import { ChatCompletionMessageParam } from "openai/resources/chat/completions";
+
 
 
 export const generateChatCompletion = async (
@@ -51,16 +51,14 @@ export const generateChatCompletion = async (
         content: chatCompletion.choices[0].message.content,
       };
 
-      const lastChat = user.chats[user.chats.length - 1];
+      const userMessage = {
+        role: "user",
+        content: message,
+      };
 
-      console.log("Last chat content:", lastChat ? lastChat.content : "No last chat");
-      console.log("New assistant message:", assistantMessage.content);
-
-      if (!lastChat || lastChat.content !== assistantMessage.content) {
-        user.chats.push(assistantMessage);
-        console.log("User chats after adding message:", user.chats);
-        await user.save();
-      }
+      user.chats.push(userMessage, assistantMessage); // Save both user and assistant messages
+      console.log("User chats after adding messages:", user.chats);
+      await user.save();
 
       return res.status(200).json({ chats: user.chats });
     } else {
@@ -72,10 +70,6 @@ export const generateChatCompletion = async (
     return res.status(500).json({ message: "Something went wrong" });
   }
 };
-
-
-//////////
-
 
 export const sendChatsToUser = async (
     req: Request,
@@ -104,6 +98,8 @@ export const sendChatsToUser = async (
     next: NextFunction
   ) => {
     try {
+      console.log('deleteChats function called'); // Add this line
+  
       //user token check
       const user = await User.findById(res.locals.jwtData.id);
       if (!user) {
