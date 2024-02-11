@@ -29,12 +29,12 @@ const Home = () => {
             gap: 5,
             my: 10,
           }}
-        >
-          <img
-            src="robot.png"
-            alt="robot"
+        > 
+          <img src="https://64.media.tumblr.com/tumblr_lfxagmwRKs1qgipwuo1_500.gifv" alt="My GIF" 
+          style={{ width: "200px", margin: "auto" }} />
+            {/* alt="robot"
             style={{ width: "200px", margin: "auto" }}
-          />
+          /> */}
           <img
             className="image-inverted rotate"
             src="openai.png"
@@ -44,7 +44,7 @@ const Home = () => {
         </Box>
         <Box sx={{ display: "flex", mx: "auto" }}>
           <img
-            src="chat.png"
+           src="https://64.media.tumblr.com/tumblr_lfxagmwRKs1qgipwuo1_500.gifv" 
             alt="chatbot"
             style={{
               display: "flex",

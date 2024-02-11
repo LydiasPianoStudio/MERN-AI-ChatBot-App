@@ -29,18 +29,67 @@ const Login = () => {
   }, [auth]);
   return (
     <Box width={"100%"} height={"100%"} display="flex" flex={1}>
-      <Box padding={8} mt={8} display={{ md: "flex", sm: "none", xs: "none" }}>
-        <img src="airobot.png" alt="Robot" style={{ width: "400px" }} />
-      </Box>
+    <Box padding={8} mt={8} display={{ md: "flex", sm: "none", xs: "none" }}>
+  
+      <img src="https://art.pixilart.com/e2c9a03b155bcbe.gif" alt="My GIF" 
+        style={{
+          width: "400px",
+          margin: "auto",
+          textAlign: "center",
+          padding: "20px",
+          borderRadius: "10px",
+          // border: "2px solid #64f3d5",
+          // boxShadow: "10px 10px 20px #000",
+        }} />
+
       <Box
-        display={"flex"}
-        flex={{ xs: 1, md: 0.5 }}
-        justifyContent={"center"}
-        alignItems={"center"}
-        padding={2}
-        ml={"auto"}
-        mt={16}
+        display="flex"
+        flexDirection="column"
+        alignItems="center"
+        justifyContent="center"
+        flex={1}
+        style={{
+          border: "2px solid #64f3d5",
+          textAlign: "center",
+          padding: "20px",
+          margin: "auto",
+          width: "80%",
+          height: "80%",
+          borderRadius: "10px",
+          boxShadow: "10px 10px 20px #000",
+        }}
       >
+
+
+        <Typography
+          variant="h4"
+          style={{
+            marginBottom: "20px",
+            fontSize: "24px",
+            color: "white",
+            fontWeight: "bold",
+            textShadow: "2px 2px #000",
+            textAlign: "center",
+          }}
+
+        >
+          Welcome to the Login Page! 👋🌍 Please enter your credentials to login so I can assist you. 🤖
+          Not a user? Please Sign Up Today! 🚀💻
+        </Typography>
+      </Box>
+
+
+    </Box>
+
+    <Box
+      display={"flex"}
+      flex={{ xs: 1, md: 0.5 }}
+      justifyContent={"center"}
+      alignItems={"center"}
+      padding={2}
+      ml={"auto"}
+      mt={16}
+    >
         <form
           onSubmit={handleSubmit}
           style={{

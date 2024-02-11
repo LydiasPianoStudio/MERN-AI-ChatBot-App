@@ -5,6 +5,8 @@ import CustomedInput from "../components/shared/CustomedInput";
 import { toast } from "react-hot-toast";
 import { UserAuth } from "../context/AuthContext";
 import { useNavigate } from "react-router-dom";
+
+
 const Signup = () => {
   const navigate = useNavigate();
   const auth = UserAuth();
@@ -31,8 +33,57 @@ const Signup = () => {
   return (
     <Box width={"100%"} height={"100%"} display="flex" flex={1}>
       <Box padding={8} mt={8} display={{ md: "flex", sm: "none", xs: "none" }}>
-        <img src="airobot.png" alt="Robot" style={{ width: "400px" }} />
+
+        <img src="johnysignup.jpg" alt="JohnnySignup"
+          style={{
+            width: "400px",
+            margin: "auto",
+            textAlign: "center",
+            padding: "20px",
+            borderRadius: "10px",
+            // border: "2px solid #64f3d5",
+            // boxShadow: "10px 10px 20px #000",
+          }} />
+
+        <Box
+          display="flex"
+          flexDirection="column"
+          alignItems="center"
+          justifyContent="center"
+          flex={1}
+          style={{
+            border: "2px solid #64f3d5",
+            textAlign: "center",
+            padding: "20px",
+            margin: "auto",
+            width: "80%",
+            height: "80%",
+            borderRadius: "10px",
+            boxShadow: "10px 10px 20px #000",
+          }}
+        >
+
+
+          <Typography
+            variant="h4"
+            style={{
+              marginBottom: "20px",
+              fontSize: "24px",
+              color: "white",
+              fontWeight: "bold",
+              textShadow: "2px 2px #000",
+              textAlign: "center",
+            }}
+
+          >
+            Hi, I'm Johnny 5, I'm a chatbot 🤖, and I'm here to help you with your queries.
+            Sign up and start chatting today!
+          </Typography>
+        </Box>
+
+
       </Box>
+
       <Box
         display={"flex"}
         flex={{ xs: 1, md: 0.5 }}
@@ -42,6 +93,8 @@ const Signup = () => {
         ml={"auto"}
         mt={16}
       >
+
+
         <form
           onSubmit={handleSubmit}
           style={{
@@ -50,6 +103,8 @@ const Signup = () => {
             boxShadow: "10px 10px 20px #000",
             borderRadius: "10px",
             border: "none",
+            textAlign: "center",
+            textShadow: "2px 2px #000",
           }}
         >
           <Box

@@ -3,7 +3,9 @@ import Configuration, { OpenAI } from "openai";
 export const generateChatCompletion = async (req, res, next) => {
     try {
         const { message } = req.body;
-        console.log("Received message:", message);
+        if (!message) {
+            return res.status(400).json({ message: "Message is required" });
+        }
         const user = await User.findById(res.locals.jwtData.id);
         if (!user) {
             return res.status(401).json({ message: "User not registered OR Token malfunctioned" });
@@ -69,7 +71,7 @@ export const sendChatsToUser = async (req, res, next) => {
 };
 export const deleteChats = async (req, res, next) => {
     try {
-        console.log('deleteChats function called'); // Add this line
+        console.log('deleteChats function called');
         //user token check
         const user = await User.findById(res.locals.jwtData.id);
         if (!user) {

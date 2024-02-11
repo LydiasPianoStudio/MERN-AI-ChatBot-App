@@ -11,7 +11,9 @@ export const generateChatCompletion = async (
 ) => {
   try {
     const { message } = req.body;
-    console.log("Received message:", message);
+    if (!message) {
+      return res.status(400).json({ message: "Message is required" });
+    }
 
     const user = await User.findById(res.locals.jwtData.id);
 
@@ -98,7 +100,7 @@ export const sendChatsToUser = async (
     next: NextFunction
   ) => {
     try {
-      console.log('deleteChats function called'); // Add this line
+      console.log('deleteChats function called'); 
   
       //user token check
       const user = await User.findById(res.locals.jwtData.id);

@@ -24,7 +24,9 @@ const Chat = () => {
   const auth = UserAuth();
   const [chatMessages, setChatMessages] = useState<Message[]>([]);
   const [loading, setLoading] = useState(false);
-const handleSubmit = async () => {
+  const [inputValue, setInputValue] = useState(""); // Add this line
+
+  const handleSubmit = async () => {
   const content = inputRef.current?.value as string;
   if (inputRef && inputRef.current) {
     inputRef.current.value = "";
@@ -88,6 +90,7 @@ const handleSubmit = async () => {
       height: "100%",
       mt: 3,
       gap: 3,
+      
     }}>
       <Box sx={{
         display: {
@@ -183,10 +186,14 @@ const handleSubmit = async () => {
             margin: "auto",
           }}
         >
+
           {" "}
           <input
-            ref={inputRef}
-            type="text"
+  ref={inputRef}
+  type="text"
+  onChange={(e) => setInputValue(e.target.value)}
+  // rest of the props...
+
             style={{
               width: "100%",
               backgroundColor: "transparent",
@@ -197,7 +204,7 @@ const handleSubmit = async () => {
               fontSize: "20px",
             }}
           />
-<IconButton onClick={handleSubmit} sx={{ color: "white", mx: 1 }} disabled={loading}>
+<IconButton onClick={handleSubmit} sx={{ color: "white", mx: 1 }} disabled={!inputValue || loading}>
   {loading ? 
     <Box sx={{
       display: 'block',
