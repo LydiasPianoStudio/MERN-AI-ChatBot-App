@@ -47,7 +47,7 @@ const ChatItem = ({
       }}
     >
       <Avatar sx={{ ml: "0" }}>
-        <img src="openai.png" alt="openai" width={"30px"} />
+        <img src="johnnychat.png" alt="johnnychat" width={"40px"} style={{ borderRadius: "50%" }} />
       </Avatar>
       <Box>
         {!messageBlocks && (
@@ -71,12 +71,12 @@ const ChatItem = ({
       sx={{
         display: "flex",
         p: 2,
-        bgcolor: "#007BFF",
+        bgcolor: "#51538f",
         gap: 2,
         borderRadius: 2,
       }}
     >
-      <Avatar sx={{ ml: "0", bgcolor: "black", color: "white" }}>
+      <Avatar sx={{ ml: "0", bgcolor: "black", color: "white", width: "40px" }}>
         {auth?.user?.name[0]}
         {auth?.user?.name.split(" ")[1][0]}
       </Avatar>

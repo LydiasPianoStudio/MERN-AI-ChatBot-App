@@ -3,6 +3,7 @@ import Configuration, { OpenAI } from "openai";
 export const generateChatCompletion = async (req, res, next) => {
     try {
         const { message } = req.body;
+        // Add validation check
         if (!message) {
             return res.status(400).json({ message: "Message is required" });
         }
@@ -20,14 +21,14 @@ export const generateChatCompletion = async (req, res, next) => {
             ...user.chats.map(({ role, content }) => ({ role, content })),
             { role: "user", content: message },
         ];
-        console.log("Constructed messages:", messages);
+        // console.log("Constructed messages:", messages);
         const params = {
             messages: [{ role: 'user', content: message }],
             model: 'gpt-3.5-turbo',
         };
-        console.log("OpenAI API Request Params:", params);
+        // console.log("OpenAI API Request Params:", params);
         const chatCompletion = await openai.chat.completions.create(params);
-        console.log("OpenAI API Response:", chatCompletion);
+        // console.log("OpenAI API Response:", chatCompletion);
         if (chatCompletion.choices && chatCompletion.choices.length > 0) {
             const assistantMessage = {
                 role: "assistant",

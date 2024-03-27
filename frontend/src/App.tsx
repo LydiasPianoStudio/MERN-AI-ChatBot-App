@@ -6,7 +6,7 @@ import Signup from "./pages/Signup";
 import Chat from "./pages/Chat";  
 import NotFound from "./pages/NotFound";
 import { UserAuth } from "./context/AuthContext";
-//import Footer from "./components/footer/Footer";
+
 
 
 

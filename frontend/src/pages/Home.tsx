@@ -30,18 +30,6 @@ const Home = () => {
             my: 10,
           }}
         > 
-          <img src="https://64.media.tumblr.com/tumblr_lfxagmwRKs1qgipwuo1_500.gifv" alt="My GIF" 
-          style={{ width: "200px", margin: "auto" }} />
-            {/* alt="robot"
-            style={{ width: "200px", margin: "auto" }}
-          /> */}
-          <img
-            className="image-inverted rotate"
-            src="openai.png"
-            alt="openai"
-            style={{ width: "200px", margin: "auto" }}
-          />
-        </Box>
         <Box sx={{ display: "flex", mx: "auto" }}>
           <img
            src="https://64.media.tumblr.com/tumblr_lfxagmwRKs1qgipwuo1_500.gifv" 
@@ -56,6 +44,32 @@ const Home = () => {
               marginBottom: 20,
               padding: 10,
             }}
+          />
+           <img
+            className="image-inverted rotate"
+            src="openai.png"
+            alt="openai"
+            style={{ width: "100px", margin: "auto" }}
+          />
+        </Box>
+
+        </Box>
+        <Box sx={{ display: "flex", mx: "auto" }}>
+          <img
+            src="JohnnyChatExample.png"
+            alt="JohnnyChatExample"
+            style={{
+              display: "flex",
+              margin: "auto",
+              width: isBelowMd ? "80%" : "60%",
+              borderRadius: 20,
+              boxShadow: "-5px -5px 105px #64f3d5",
+              marginTop: 20,
+              marginBottom: 20,
+              padding: 10,
+              transition: "transform 0.3s",
+            }}
+
           />
         </Box>
       </Box>

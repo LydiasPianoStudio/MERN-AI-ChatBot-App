@@ -34,15 +34,15 @@ const Chat = () => {
   const newMessage: Message = { role: "user", content };
   setChatMessages((prev) => [...prev, newMessage]);
 
-  setLoading(true); // Start loading before the request
+  setLoading(true); 
   try {
     const chatData = await sendChatRequest(content);
     setChatMessages((prev) => [...prev, chatData.chats[chatData.chats.length - 1]]);
   } catch (error) {
     console.error("Error sending chat request:", error);
-    // Handle error appropriately
+    
   }
-  setLoading(false); // Stop loading after the request
+  setLoading(false);
 };
  
 
@@ -120,13 +120,17 @@ const Chat = () => {
 
             {auth?.user?.name[0]}
             {auth?.user?.name.split(" ")[1][0]}
-          </Avatar>
-          <Typography sx={{ mx: 'auto', fontFamily: "work sans" }}>
-            You are talking to a Chatbot
+           </Avatar>
+             <img src="johnnychat.png" alt="johnnychat" width={"150px"} 
+             style={{ display: 'block', margin: '0 auto' }} />
+          <Typography sx={{ mx: 'auto', fontFamily: "Open Sans", fontWeight: 700 }}>
+            Hello! Johnny 5 here! 
           </Typography>
-          <Typography sx={{ mx: 'auto', fontFamily: "work sans", my: 4, p: 3 }}>
-            Ask any questions related to Entertainment, Business, Education, Advice, etc. Please, don't share personal information.
-          </Typography>
+            <Typography sx={{ mx: 'auto', fontFamily: "Open Sans", fontWeight: 200, my: 2, p: 2 }}>
+                How can I assist you today? I can answer many questions and even provide JavaScript code!
+                Need advice? Looking up facts? I'm here to help! 
+                Please note that I'm not a real person, so please refrain from sharing personal information.
+            </Typography>
 
           <Button
             onClick={handleDeleteChats}
@@ -156,6 +160,7 @@ const Chat = () => {
           fontWeight: "600",
         }}>
           Model - GPT 3.5 Turbo
+        <img src="openai.png" alt="openai" width={"40px"} style={{ marginLeft: '5px', backgroundColor: "#51538f" }} /> 
         </Typography>
         <Box
           sx={{
@@ -192,8 +197,6 @@ const Chat = () => {
   ref={inputRef}
   type="text"
   onChange={(e) => setInputValue(e.target.value)}
-  // rest of the props...
-
             style={{
               width: "100%",
               backgroundColor: "transparent",

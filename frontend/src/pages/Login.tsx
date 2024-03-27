@@ -38,8 +38,7 @@ const Login = () => {
           textAlign: "center",
           padding: "20px",
           borderRadius: "10px",
-          // border: "2px solid #64f3d5",
-          // boxShadow: "10px 10px 20px #000",
+   
         }} />
 
       <Box
@@ -73,7 +72,7 @@ const Login = () => {
           }}
 
         >
-          Welcome to the Login Page! 👋🌍 Please enter your credentials to login so I can assist you. 🤖
+          Hi, I'm Johnny 5! 👋 Welcome to the Login Page! 🤖 Please enter your credentials to login so I can assist you. 🤖
           Not a user? Please Sign Up Today! 🚀💻
         </Typography>
       </Box>
