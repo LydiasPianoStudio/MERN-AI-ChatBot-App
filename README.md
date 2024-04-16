@@ -1,4 +1,4 @@
-!alt text(frontend/public/JohnnyChatExample.png)
+![Lydia Bandy Web Developer](Banner.jpg)
 
 ## Project Overview
 Welcome to my MERN Stack ChatGPT Clone project! This comprehensive guide provides insights into the key features and technologies used in building this full-stack application.
