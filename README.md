@@ -1,3 +1,4 @@
+![Johnny 5 is Alive](frontend/public/JohnnyChatExample.png)
 
 ## Project Overview
 Welcome to my MERN Stack ChatGPT Clone project! This comprehensive guide provides insights into the key features and technologies used in building this full-stack application.
