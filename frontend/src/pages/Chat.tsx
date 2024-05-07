@@ -24,7 +24,7 @@ const Chat = () => {
   const auth = UserAuth();
   const [chatMessages, setChatMessages] = useState<Message[]>([]);
   const [loading, setLoading] = useState(false);
-  const [inputValue, setInputValue] = useState(""); // Add this line
+  const [inputValue, setInputValue] = useState(""); 
 
   const handleSubmit = async () => {
   const content = inputRef.current?.value as string;
@@ -44,11 +44,10 @@ const Chat = () => {
   }
   setLoading(false);
 };
+
+
  
-
-
-  
-  const handleDeleteChats = async () => {
+  async function handleDeleteChats() {
     try {
       toast.loading("Deleting Chats", { id: "deletechats" });
       await deleteUserChats();
@@ -58,7 +57,7 @@ const Chat = () => {
       console.log(error);
       toast.error("Deleting chats failed", { id: "deletechats" });
     }
-  };
+  }
   useLayoutEffect(() => {
     if (auth?.isLoggedIn && auth.user) {
       toast.loading("Loading Chats", { id: "loadchats" });
@@ -127,9 +126,10 @@ const Chat = () => {
             Hello! Johnny 5 here! 
           </Typography>
             <Typography sx={{ mx: 'auto', fontFamily: "Open Sans", fontWeight: 200, my: 2, p: 2 }}>
-                How can I assist you today? I can answer many questions and even provide JavaScript code!
-                Need advice? Looking up facts? I'm here to help! 
-                Please note that I'm not a real person, so please refrain from sharing personal information.
+            How can I assist you today? I can answer many questions, provide code, and even create stories! 
+            Need advice? Need inspiration? Looking up facts? I can generate jokes and riddles too! 
+            I'm here to help!                       
+            **Please note that I'm not a real person, so please refrain from sharing personal information.**
             </Typography>
 
           <Button
@@ -207,7 +207,7 @@ const Chat = () => {
               fontSize: "20px",
             }}
           />
-<IconButton onClick={handleSubmit} sx={{ color: "white", mx: 1 }} disabled={!inputValue || loading}>
+<IconButton disabled={!inputValue.trim()} onClick={handleSubmit} sx={{ color: "white", mx: 1 }} >
   {loading ? 
     <Box sx={{
       display: 'block',
@@ -224,5 +224,7 @@ const Chat = () => {
     </Box>
   );
 };
+
+
 
 export default Chat;
